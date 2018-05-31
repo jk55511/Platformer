@@ -1,5 +1,3 @@
-import javax.swing.JFrame;
-import java.awt.*;
 import java.util.*;
 import javax.swing.Timer;
 
