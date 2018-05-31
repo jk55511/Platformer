@@ -1,7 +1,4 @@
 import java.awt.*;
-import javax.imageio.*;
-import java.io.*;
-
 
 public abstract class RealGObject extends GObject{
     
