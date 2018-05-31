@@ -8,7 +8,7 @@ public class Player extends RealGObject {
     
     public Player(Game game, int y, int x){
         super( game, y, x, 10, 10);
-        try {mySprite = ImageIO.read(new File(myGame.filePath+"\\playerSprite.pg"));}
+        try {mySprite = ImageIO.read(new File(myGame.filePath+"\\playerSprite.jpg"));}
         catch (IOException a) { System.out.println("No Sprite Found for"+this); System.exit(0);};
     }
     
