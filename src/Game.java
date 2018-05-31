@@ -11,6 +11,7 @@ public class Game {
     public Game(int tick, String path){
         tickRate = tick;
         filePath = path;
+        timer.setDelay(tickRate);
     }
     
     public ArrayList<GObject> getGObjects(){
@@ -25,7 +26,7 @@ public class Game {
         
         
     
-    private Timer timer = new Timer(tickRate, updatePerformer);
+    private Timer timer = new Timer(1, updatePerformer);
     
     public void update(){
         //Run code for all objects
