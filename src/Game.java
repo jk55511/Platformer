@@ -3,13 +3,14 @@ import javax.swing.Timer;
 
 public class Game {
     
-    public static ArrayList<GObject> GObjects = new ArrayList<GObject>();
+	public static ArrayList<GObject> GObjects = new ArrayList<GObject>();
     private int tickRate;
-   
+    public String filePath;
     private GameWindow gameWin = new GameWindow();;
     
-    public Game(int tick){
+    public Game(int tick, String path){
         tickRate = tick;
+        filePath = path;
     }
     
     public ArrayList<GObject> getGObjects(){
