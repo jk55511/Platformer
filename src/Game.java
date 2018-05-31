@@ -34,10 +34,14 @@ public class Game {
             obj.update();
         }
         //Render new objects
-        gameWin.repaint();
-        
-            
+        gameWin.repaint();         
     }
+    
+    public void gameStart(){
+        timer.start();
+    }
+    
+    
 
 }
 
