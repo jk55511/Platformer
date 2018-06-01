@@ -1,5 +1,6 @@
 import javax.imageio.*;
 import java.io.*;
+import java.util.*;
 
 public class Player extends RealGObject {
     
@@ -16,19 +17,51 @@ public class Player extends RealGObject {
         catch (IOException a) { System.out.println("No Sprite Found for"+this); System.exit(0);}
     }
     
+    private int maxXSpeed = 15;
+    private int xSpeedDecay = 3;
+    private int xAccel = 1;
+    private int xSpeed = 1;
+    
     public void update(){
-        if(myGame.gameWin.keyStates.get(0)) {
+     //X Movement Handling 
+       ArrayList<Boolean> keyStates = myGame.gameWin.keyStates;
+        if(keyStates.get(1) && xSpeed >= -1*maxXSpeed) {
+        	xSpeed-=xAccel;
+        }
+        if(keyStates.get(3) && xSpeed <= maxXSpeed) {
+        	xSpeed+=xAccel;
+        }
+        
+        //Speed Decay for x direction
+        if(xSpeed != 0){
+            if(xSpeed < 0 && !keyStates.get(1)){
+                if(xSpeed+xSpeedDecay > 0)
+                    xSpeed = 0;
+                else 
+                    xSpeed+=xSpeedDecay;
+            }
+            else
+            if(xSpeed > 0 && !keyStates.get(3)){
+                if(xSpeed-xSpeedDecay < 0)
+                    xSpeed = 0;
+                else 
+                    xSpeed-=xSpeedDecay;                
+            }
+        }
+        //COLLSION X CHECK
+        if(xSpeed != 0){
+            
+        }
+        
+        if(keyStates.get(0)) {
         	myY-=5;
         }
-        if(myGame.gameWin.keyStates.get(1)) {
-        	myX-=5;
-        }
-        if(myGame.gameWin.keyStates.get(2)) {
+        if(keyStates.get(2)) {
         	myY+=5;
         }
-        if(myGame.gameWin.keyStates.get(3)) {
-        	myX+=5;
-        }
+        
+        
+        
     }
     
     public String toString(){
