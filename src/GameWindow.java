@@ -11,14 +11,14 @@ public class GameWindow extends JFrame implements KeyListener{
     //w = 0, a = 1, s = 2, d = 3
     public ArrayList<Boolean> keyStates = new ArrayList<Boolean>();
     //Change depending on number of used keys
-    private final int keysUsed = 4;
+    private final int KEYSUSED = 4;
     
     private static final long serialVersionUID = 1;
     public GCanvas myCanvas = new GCanvas();
     
     public GameWindow(){
     	//Initialize keyStates
-    	for(int count = 0; count < keysUsed; count++)
+    	for(int count = 0; count < KEYSUSED; count++)
     		keyStates.add(false);
     	
     	//Setup Canvas and Window
@@ -47,7 +47,7 @@ public class GameWindow extends JFrame implements KeyListener{
 
 @Override
 public void keyPressed(KeyEvent e) {
-	// TODO Auto-generated method stub
+	// Set State of pressed keys to true
 	System.out.println(e);
 	if(e.getKeyChar() == 'w') {
 		keyStates.set(0, true);
@@ -65,7 +65,7 @@ public void keyPressed(KeyEvent e) {
 
 @Override
 public void keyReleased(KeyEvent e) {
-	// TODO Auto-generated method stub
+	// Set State of pressed keys to false
 	if(e.getKeyChar() == 'w') {
 		keyStates.set(0, false);
 	}
@@ -82,7 +82,7 @@ public void keyReleased(KeyEvent e) {
 
 @Override
 public void keyTyped(KeyEvent e) {
-	// TODO Auto-generated method stub
+	// TODO ATTACKS
 	
 }
    
