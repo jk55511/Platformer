@@ -2,7 +2,7 @@ import java.awt.*;
 
 public abstract class RealGObject extends GObject{
     
-    private CollisonBox myCBox;
+    public CollisonBox myCBox;
     public Image mySprite;
     
     public RealGObject(Game game, int y, int x, int l, int w){
