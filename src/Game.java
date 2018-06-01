@@ -5,12 +5,10 @@ public class Game {
     
 	public static ArrayList<GObject> GObjects = new ArrayList<GObject>();
     private int tickRate;
-    public String filePath;
     private GameWindow gameWin = new GameWindow();;
     
-    public Game(int tick, String path){
+    public Game(int tick){
         tickRate = tick;
-        filePath = path;
         timer.setDelay(tickRate);
     }
     
