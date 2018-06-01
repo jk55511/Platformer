@@ -17,7 +17,18 @@ public class Player extends RealGObject {
     }
     
     public void update(){
-        myX++;
+        if(myGame.gameWin.keyStates.get(0)) {
+        	myY-=5;
+        }
+        if(myGame.gameWin.keyStates.get(1)) {
+        	myX-=5;
+        }
+        if(myGame.gameWin.keyStates.get(2)) {
+        	myY+=5;
+        }
+        if(myGame.gameWin.keyStates.get(3)) {
+        	myX+=5;
+        }
     }
     
     public String toString(){

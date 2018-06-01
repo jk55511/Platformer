@@ -5,7 +5,7 @@ public class Game {
     
 	public static ArrayList<GObject> GObjects = new ArrayList<GObject>();
     private int tickRate;
-    private GameWindow gameWin = new GameWindow();;
+    public GameWindow gameWin = new GameWindow();;
     
     public Game(int tick){
         tickRate = tick;
