@@ -3,6 +3,7 @@ import java.awt.*;
 public abstract class GObject {
     
     private static int nextId = 1;
+    public CollisonBox myCBox  = null;
     public int myId;
     public Game myGame;
     public int myY = -1;
