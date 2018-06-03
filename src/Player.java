@@ -25,13 +25,12 @@ public class Player extends RealGObject {
     public void update(){
      //X Movement Handling 
        ArrayList<Boolean> keyStates = myGame.gameWin.keyStates;
-        if(keyStates.get(1) && xSpeed >= -1*maxXSpeed) {
+        if(keyStates.get(1) && xSpeed > -1*maxXSpeed) {
         	xSpeed-=xAccel;
         }
-        if(keyStates.get(3) && xSpeed <= maxXSpeed) {
+        if(keyStates.get(3) && xSpeed < maxXSpeed) {
         	xSpeed+=xAccel;
         }
-        
         //Speed Decay for x direction
         if(xSpeed != 0){
             if(xSpeed < 0 && !keyStates.get(1)){
@@ -51,7 +50,7 @@ public class Player extends RealGObject {
         //COLLSION X CHECK
         if(xSpeed != 0){
             for(RealGObject a:myGame.colObjs) {
-            	if(myCBox.isColliding(a.myCBox, xSpeed, 0)) {
+            	if(myCBox.isColliding(a.myCBox, xSpeed, 0) && a != this) {
             		xSpeed = a.myX - myX;
             	}
             	else {
@@ -60,7 +59,6 @@ public class Player extends RealGObject {
             }
             	
         }
-        
         myX+=xSpeed;
         if(keyStates.get(0)) {
         	myY-=5;
