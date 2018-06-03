@@ -50,14 +50,18 @@ public class Player extends RealGObject {
         }
         //COLLSION X CHECK
         if(xSpeed != 0){
-            for(GObject a:Game.GObjects) {
-            	if(a.myCBox != null && myCBox.isColliding(a.myCBox, xSpeed, 0)) {
+            for(RealGObject a:myGame.colObjs) {
+            	if(myCBox.isColliding(a.myCBox, xSpeed, 0)) {
+            		xSpeed = a.myX - myX;
+            	}
+            	else {
             		
             	}
             }
             	
         }
         
+        myX+=xSpeed;
         if(keyStates.get(0)) {
         	myY-=5;
         }

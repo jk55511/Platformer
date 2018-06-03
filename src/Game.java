@@ -4,6 +4,7 @@ import javax.swing.Timer;
 public class Game {
     
 	public static ArrayList<GObject> GObjects = new ArrayList<GObject>();
+	public ArrayList<RealGObject> colObjs = new ArrayList<RealGObject>();
     private int tickRate;
     public GameWindow gameWin = new GameWindow();;
     

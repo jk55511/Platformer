@@ -3,7 +3,6 @@ import java.awt.*;
 public abstract class GObject {
     
     private static int nextId = 1;
-    public CollisonBox myCBox  = null;
     public int myId;
     public Game myGame;
     public int myY = -1;
@@ -26,14 +25,6 @@ public abstract class GObject {
     public void die(){
         //Figure out how to handle dynamic Ids
         myGame.getGObjects().remove(myId);
-    }
-    
-    //If object has no position it will return -1
-    public int getYPos(){
-        return myY;
-    }
-    public int getXPos(){
-        return myX;
     }
     
     public abstract void render(Graphics g);
