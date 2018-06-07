@@ -21,6 +21,9 @@ public class Player extends RealGObject {
     private int xSpeedDecay = 3;
     private int xAccel = 1;
     private int xSpeed = 1;
+    private int ySpeed = 1;
+    private int jumpAccel = 15;
+    private final int GRAVITYACCEL = 2;
     
     public void update(){
      //X Movement Handling 
@@ -47,25 +50,38 @@ public class Player extends RealGObject {
                     xSpeed-=xSpeedDecay;                
             }
         }
-        //COLLSION X CHECK
+        //JUMP
+        boolean inAir = false;
+            //Check for in Air
+        for(RealGObject a:myGame.colObjs){
+            if(a != this && myCBox.isColliding(a.myCBox, -1, 0)){
+                inAir = true;
+            }
+        }
+        if(keyStates.get(0) && !inAir) {
+        	ySpeed-=jumpAccel;
+        }
+        if(keyStates.get(2)) {
+        	ySpeed+=1;
+        }
+        
+        //COLLSION CHECK
         if(xSpeed != 0){
             for(RealGObject a:myGame.colObjs) {
-            	if(myCBox.isColliding(a.myCBox, xSpeed, 0) && a != this) {
+            	if(a != this && myCBox.isColliding(a.myCBox, xSpeed, 0)) {
             		xSpeed = a.myX - myX;
             	}
-            	else {
-            		
+            	else if(a != this && myCBox.isColliding(a.myCBox, 0, ySpeed)){
+            		ySpeed = a.myY - myY+1;
+            	}else if(a != this && myCBox.isColliding(a.myCBox, xSpeed, ySpeed)){
+            	    xSpeed = a.myX - myX;
+            	    ySpeed = a.myY - myY+1;
             	}
             }
             	
         }
         myX+=xSpeed;
-        if(keyStates.get(0)) {
-        	myY-=5;
-        }
-        if(keyStates.get(2)) {
-        	myY+=5;
-        }
+        
         
         
         

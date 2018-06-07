@@ -8,7 +8,7 @@ import javax.swing.*;
 public class GameWindow extends JFrame implements KeyListener{
    
 	//Current Key States
-    //w = 0, a = 1, s = 2, d = 3
+    //SPACE = 0, a = 1, s = 2, d = 3
     public ArrayList<Boolean> keyStates = new ArrayList<Boolean>();
     //Change depending on number of used keys
     private final int KEYSUSED = 4;
@@ -49,7 +49,7 @@ public class GameWindow extends JFrame implements KeyListener{
 public void keyPressed(KeyEvent e) {
 	// Set State of pressed keys to true
 	System.out.println(e);
-	if(e.getKeyChar() == 'w') {
+	if(e.getKeyChar() == ' ') {
 		keyStates.set(0, true);
 	}
 	if(e.getKeyChar() == 'a') {
@@ -66,7 +66,7 @@ public void keyPressed(KeyEvent e) {
 @Override
 public void keyReleased(KeyEvent e) {
 	// Set State of pressed keys to false
-	if(e.getKeyChar() == 'w') {
+	if(e.getKeyChar() == ' ') {
 		keyStates.set(0, false);
 	}
 	if(e.getKeyChar() == 'a') {
