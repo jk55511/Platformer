@@ -1,9 +1,10 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class RealGObject extends GObject{
     
 	public CollisonBox myCBox;
-    public Image mySprite;
+    public BufferedImage mySprite;
     
     public RealGObject(Game game, int y, int x, int l, int w){
         super(game, y , x);

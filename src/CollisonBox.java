@@ -1,8 +1,8 @@
 
 public class CollisonBox {
-    private int[] origin;
-    private int length;
-    private int width;
+    public int[] origin;
+    public int length;
+    public int width;
     
     public CollisonBox(int[] orig, int l, int w){
            origin = orig;
@@ -16,16 +16,21 @@ public class CollisonBox {
    //Takes a another CollisionBox object and checks for collison at some future position incremented by x and y
     public boolean isColliding(CollisonBox collBox, int x, int y){
         //Check Y
-        if(origin[0]+y <= collBox.getOrigin()[0] && collBox.getOrigin()[0] <= origin[0]+length+y){
-            //Check X
-            if(origin[1]+x <= collBox.getOrigin()[1] && collBox.getOrigin()[1] <= origin[1]+length+x){
-                return true;
+        if(origin[0]+y <= collBox.getOrigin()[0] && origin[0]+length+y >= collBox.getOrigin()[0] || origin[0]+y >= collBox.getOrigin()[0] && origin[0]+y <= collBox.getOrigin()[0]+collBox.length){
+        	System.out.println("endColtrue1"+origin[0]+"  "+origin[1]+"\n"+(origin[1]+x)+"  "+collBox.getOrigin()[1]+"\n"+(origin[1]+width+x));
+        	//Check X
+            if(origin[1]+x <= collBox.getOrigin()[1] && origin[1]+width+x >= collBox.getOrigin()[1] || origin[1]+x >= collBox.getOrigin()[1] && origin[1]+x <= collBox.getOrigin()[1]+collBox.width){
+            	System.out.println("endColtrue2");
+            	return true;
             }
             else 
                 return false;
         }
-        else 
-            return false;
+        else {
+        	System.out.println("endCol");
+        	return false;
+        }
+        
     }
     
     public int getLength(){
