@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -22,13 +23,14 @@ public class GameWindow extends JFrame implements KeyListener{
     		keyStates.add(false);
     	
     	//Setup Canvas and Window
-    	myCanvas.setPreferredSize(new Dimension(1920, 1080));
-        myCanvas.setLayout(new FlowLayout());
+    	myCanvas.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+    	myCanvas.setLayout(new FlowLayout());
         myCanvas.addKeyListener(this);
         myCanvas.setFocusable(true);
         this.setContentPane(myCanvas);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
+        this.setSize(this.getPreferredSize());
         this.setTitle("Platformer");
         this.setVisible(true);
         
@@ -39,9 +41,13 @@ public class GameWindow extends JFrame implements KeyListener{
 		@Override
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
+			BufferedImage frame = new BufferedImage(1920 ,1080 ,7);
+			Graphics gra = frame.createGraphics();
 			for(GObject obj: Game.GObjects){
-			    obj.render(g);
+				obj.render(gra);
 			}
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			g.drawImage(frame, 0, 0, (int)(screenSize.getHeight()*(16.0/9.0)), (int)screenSize.getHeight(), myCanvas); 
 		}
 	}
 

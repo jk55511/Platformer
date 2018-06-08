@@ -24,7 +24,7 @@ public class Player extends RealGObject {
     private int xAccel = 1;
     private int xSpeed = 1;
     private int ySpeed = 1;
-    private int jumpAccel = 50;
+    private int jumpAccel = -50;
     private final int GRAVITYACCEL = 3;
     
     public void update(){
@@ -63,7 +63,7 @@ public class Player extends RealGObject {
             }
         }
         if(keyStates.get(0) && !inAir) {
-        	ySpeed-=jumpAccel;
+        	ySpeed = jumpAccel;
         }
         if(inAir) {
         	ySpeed+=GRAVITYACCEL;
@@ -82,10 +82,10 @@ public class Player extends RealGObject {
         	for(RealGObject a:myGame.colObjs) {
             	
         		if(a != this && myCBox.isColliding(a.myCBox, xSpeed, -1)) {
-            		xSpeedChange = a.myX- myX + myCBox.width;
+            		xSpeedChange = a.myX - myX + a.myCBox.width;
             	}
            
-            	if(a != this && myCBox.isColliding(a.myCBox, 0, ySpeed)){
+            	if(a != this && myCBox.isColliding(a.myCBox, 1, ySpeed)){
             		ySpeedChange = a.myY- myY - myCBox.length;
             		System.out.println("COLLISON OCCUREED IN Y\nDistance   "+ySpeedChange);
             	}
@@ -108,6 +108,7 @@ public class Player extends RealGObject {
         
         
     }
+    
     
     public String toString(){
         return " Player";
