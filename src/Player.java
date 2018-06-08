@@ -134,7 +134,7 @@ public class Player extends RealGObject {
         //Kill Player 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if(myY-150 > (int)screenSize.getHeight()) {
-        	this.die();
+        	myY = -150;
         }
         //Sprite Handling
         String spriteType;
