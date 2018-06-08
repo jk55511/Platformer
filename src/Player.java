@@ -105,7 +105,7 @@ public class Player extends RealGObject {
         			}
         		}else {
         			if(a != this && myCBox.isColliding(a.myCBox, xSpeed, yOffSet)) {
-        				xSpeedChange = a.myX - myX + myCBox.width; 
+        				xSpeedChange = myX + myCBox.width - a.myX; 
         			}
         		}
            
