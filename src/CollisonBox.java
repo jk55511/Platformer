@@ -17,17 +17,14 @@ public class CollisonBox {
     public boolean isColliding(CollisonBox collBox, int x, int y){
         //Check Y
         if(origin[0]+y <= collBox.getOrigin()[0] && origin[0]+length+y >= collBox.getOrigin()[0] || origin[0]+y >= collBox.getOrigin()[0] && origin[0]+y <= collBox.getOrigin()[0]+collBox.length){
-        	System.out.println("endColtrue1"+origin[0]+"  "+origin[1]+"\n"+(origin[1]+x)+"  "+collBox.getOrigin()[1]+"\n"+(origin[1]+width+x));
         	//Check X
             if(origin[1]+x <= collBox.getOrigin()[1] && origin[1]+width+x >= collBox.getOrigin()[1] || origin[1]+x >= collBox.getOrigin()[1] && origin[1]+x <= collBox.getOrigin()[1]+collBox.width){
-            	System.out.println("endColtrue2");
             	return true;
             }
             else 
                 return false;
         }
         else {
-        	System.out.println("endCol");
         	return false;
         }
         

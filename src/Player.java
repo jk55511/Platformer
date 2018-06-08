@@ -8,21 +8,23 @@ public class Player extends RealGObject {
     public int myYV;
     
     public Player(Game game, int y, int x){
-        super( game, y, x, 600, 100);
+        super( game, y, x, 100, 100);
         try {
         	InputStream image = getClass().getResourceAsStream("/playerSprite.png");
         	mySprite = ImageIO.read(image); 
         	image.close();
+        	myCBox.length = mySprite.getHeight();
+        	myCBox.width = mySprite.getWidth();
         }
         catch (IOException a) { System.out.println("No Sprite Found for"+this); System.exit(0);}
     }
     
     private int maxXSpeed = 15;
-    private int xSpeedDecay = 3;
+    private int xSpeedDecay = 2;
     private int xAccel = 1;
     private int xSpeed = 1;
     private int ySpeed = 1;
-    private int jumpAccel = 15;
+    private int jumpAccel = 50;
     private final int GRAVITYACCEL = 3;
     
     public void update(){
@@ -58,7 +60,6 @@ public class Player extends RealGObject {
         for(RealGObject a:myGame.colObjs){
             if(a != this && myCBox.isColliding(a.myCBox, 1, 0)){
                 inAir = false;
-                System.out.println("whyza");
             }
         }
         if(keyStates.get(0) && !inAir) {
@@ -74,37 +75,34 @@ public class Player extends RealGObject {
         }
         
         //COLLSION CHECK SOMETHING WRONG
-        System.out.println(ySpeed);
+        System.out.println("BEFORE COLL    "+ySpeed);
         if(xSpeed != 0 || ySpeed != 0){
             int xSpeedChange = xSpeed;
             int ySpeedChange = ySpeed;
         	for(RealGObject a:myGame.colObjs) {
             	
-            	if(a != this && myCBox.isColliding(a.myCBox, xSpeed, 0)) {
-            		xSpeedChange = a.myX - myX;
-            		System.out.println("1678");
+        		if(a != this && myCBox.isColliding(a.myCBox, xSpeed, -1)) {
+            		xSpeedChange = a.myX- myX + myCBox.width;
             	}
+           
             	if(a != this && myCBox.isColliding(a.myCBox, 0, ySpeed)){
-            		ySpeedChange = a.myY - myY+1;
-            		System.out.println("279876");
+            		ySpeedChange = a.myY- myY - myCBox.length;
+            		System.out.println("COLLISON OCCUREED IN Y\nDistance   "+ySpeedChange);
             	}
-            	if(a != this && myCBox.isColliding(a.myCBox, xSpeed, ySpeed)){
-            		xSpeedChange = a.myX - myX;
-            	    ySpeedChange = a.myY - myY+1;
-            	    System.out.println("374658");
-            	}
-            	System.out.println("endtg");
+            
             }
             xSpeed = xSpeedChange;
             ySpeed = ySpeedChange;
+            System.out.println("AFTER COLLISON CHECK        "+ySpeed);
         }
-        if(ySpeed > 15) {
-        	ySpeed = 15;
+        if(ySpeed > 50) {
+        	ySpeed = 50;
         }
         myX+=xSpeed;
         myY+=ySpeed;
         
         System.out.println(ySpeed+"\nPOSITIOIN       "+myY+"   "+myX);
+        System.out.println("YSPEED   "+ySpeed);
         myCBox.origin[0] = myY;
         myCBox.origin[1] = myX;
         
