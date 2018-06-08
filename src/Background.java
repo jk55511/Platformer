@@ -12,7 +12,7 @@ public class Background extends InvisGObject {
 	public Background(Game game) {
 		super(game);
 		try {
-        	InputStream image = getClass().getResourceAsStream("/Background.jpg");
+        	InputStream image = getClass().getResourceAsStream("/Background.png");
         	myRec = ImageIO.read(image); 
         	image.close();
         }
@@ -20,7 +20,7 @@ public class Background extends InvisGObject {
 	}
 	
 	public void render(Graphics g){
-        g.drawImage(myRec, 0, 0, myGame.getGameWindow().myCanvas);        
+        g.drawImage(myRec, 0, 0, 1920, 1080, myGame.getGameWindow().myCanvas);        
     }
 
 }

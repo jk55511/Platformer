@@ -1,4 +1,8 @@
 import javax.imageio.*;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.io.*;
 import java.util.*;
 
@@ -10,11 +14,11 @@ public class Player extends RealGObject {
     public Player(Game game, int y, int x){
         super( game, y, x, 100, 100);
         try {
-        	InputStream image = getClass().getResourceAsStream("/playerSprite.png");
+        	InputStream image = getClass().getResourceAsStream("/idle0.png");
         	mySprite = ImageIO.read(image); 
         	image.close();
-        	myCBox.length = mySprite.getHeight();
-        	myCBox.width = mySprite.getWidth();
+        	myCBox.length = 99;
+        	myCBox.width = 63;
         }
         catch (IOException a) { System.out.println("No Sprite Found for"+this); System.exit(0);}
     }
@@ -26,6 +30,9 @@ public class Player extends RealGObject {
     private int ySpeed = 1;
     private int jumpAccel = -50;
     private final int GRAVITYACCEL = 3;
+    private double spriteTimer = 0;
+    private String prevType = "idle";
+    private int lastDir = 1;
     
     public void update(){
      //X Movement Handling 
@@ -58,7 +65,7 @@ public class Player extends RealGObject {
         boolean inAir = true;
             //Check for in Air
         for(RealGObject a:myGame.colObjs){
-            if(a != this && myCBox.isColliding(a.myCBox, 1, 0)){
+            if(a != this && myCBox.isColliding(a.myCBox, 1, 1)){
                 inAir = false;
             }
         }
@@ -75,25 +82,46 @@ public class Player extends RealGObject {
         }
         
         //COLLSION CHECK SOMETHING WRONG
-        System.out.println("BEFORE COLL    "+ySpeed);
         if(xSpeed != 0 || ySpeed != 0){
             int xSpeedChange = xSpeed;
             int ySpeedChange = ySpeed;
         	for(RealGObject a:myGame.colObjs) {
+            	int xOffSet;
+            	int yOffSet;
+            	//Set offsets to fix collision
+            	if(myY <= a.myY)
+            		yOffSet = -1;
+            	else
+            		yOffSet = 1;
             	
-        		if(a != this && myCBox.isColliding(a.myCBox, xSpeed, -1)) {
-            		xSpeedChange = a.myX - myX + a.myCBox.width;
-            	}
+            	if(myX <= a.myX)
+            		xOffSet = 1;
+            	else
+            		xOffSet = -1;
+        		
+            	if(myX > a.myX) {
+        			if(a != this && myCBox.isColliding(a.myCBox, xSpeed, yOffSet)) {
+        				xSpeedChange = a.myX - myX + a.myCBox.width;
+        			}
+        		}else {
+        			if(a != this && myCBox.isColliding(a.myCBox, xSpeed, yOffSet)) {
+        				xSpeedChange = a.myX - myX + myCBox.width; 
+        			}
+        		}
            
-            	if(a != this && myCBox.isColliding(a.myCBox, 1, ySpeed)){
-            		ySpeedChange = a.myY- myY - myCBox.length;
-            		System.out.println("COLLISON OCCUREED IN Y\nDistance   "+ySpeedChange);
+            	if(a.myY >= myY) {	
+        			if(a != this && myCBox.isColliding(a.myCBox, xOffSet, ySpeed)){
+            			ySpeedChange = a.myY- myY - myCBox.length;
+            		}
             	}
+        		else
+        			if(a != this && myCBox.isColliding(a.myCBox, xOffSet, ySpeed)){
+            			ySpeedChange = a.myY + a.myCBox.length - myY;
+        			}
             
-            }
+        		}
             xSpeed = xSpeedChange;
             ySpeed = ySpeedChange;
-            System.out.println("AFTER COLLISON CHECK        "+ySpeed);
         }
         if(ySpeed > 50) {
         	ySpeed = 50;
@@ -101,14 +129,57 @@ public class Player extends RealGObject {
         myX+=xSpeed;
         myY+=ySpeed;
         
-        System.out.println(ySpeed+"\nPOSITIOIN       "+myY+"   "+myX);
-        System.out.println("YSPEED   "+ySpeed);
         myCBox.origin[0] = myY;
         myCBox.origin[1] = myX;
-        
-        
+        //Kill Player 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        if(myY-150 > (int)screenSize.getHeight()) {
+        	this.die();
+        }
+        //Sprite Handling
+        String spriteType;
+        if(inAir) {
+        	spriteType = "midair";
+        }
+        else if(keyStates.get(0)) {
+        	spriteType = "jump";
+        }
+        else if(keyStates.get(3) || keyStates.get(1)) {
+        	spriteType = "run";
+        }
+        else 
+        	spriteType = "idle";
+      
+        if(!spriteType.equals(prevType))
+        	spriteTimer = 0;
+        prevType = spriteType;
+        try {
+        	InputStream image = getClass().getResourceAsStream("/"+spriteType+(int)spriteTimer+".png");
+        	mySprite = ImageIO.read(image); 
+        	image.close();
+        }
+        catch (IOException a) { System.out.println("No Sprite Found for"+this); System.exit(0);}
+        spriteTimer += 0.4;
+        if(spriteTimer >= 8 && spriteType.equals("run") || spriteTimer >= 12 && spriteType.equals("idle") || spriteTimer >= 2.0 && spriteType.equals("midair"))
+        	spriteTimer = 0;
     }
     
+    @Override
+    public void render(Graphics g) {
+    	ArrayList<Boolean> keyStates = myGame.gameWin.keyStates;
+    	if(keyStates.get(3) || lastDir == 0 && !keyStates.get(1)) {
+    		g.drawImage(mySprite, myX, myY, 63, 99, myGame.getGameWindow().myCanvas);
+    	}
+    	else {
+    		lastDir = 1;
+    		g.drawImage(mySprite, myX + 63, myY, -63, 99, myGame.getGameWindow().myCanvas);        
+    	}
+    }
+    
+    public void die() {
+    	super.die();
+    	System.exit(0);
+    }
     
     public String toString(){
         return " Player";
