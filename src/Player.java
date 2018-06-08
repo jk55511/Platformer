@@ -169,6 +169,7 @@ public class Player extends RealGObject {
     	ArrayList<Boolean> keyStates = myGame.gameWin.keyStates;
     	if(keyStates.get(3) || lastDir == 0 && !keyStates.get(1)) {
     		g.drawImage(mySprite, myX, myY, 63, 99, myGame.getGameWindow().myCanvas);
+    		lastDir = 0;
     	}
     	else {
     		lastDir = 1;
